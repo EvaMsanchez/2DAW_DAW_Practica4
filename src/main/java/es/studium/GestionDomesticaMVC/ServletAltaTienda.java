@@ -1,9 +1,6 @@
 package es.studium.GestionDomesticaMVC;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -15,31 +12,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
- * Servlet implementation class ServletPrincipal
+ * Servlet implementation class ServletAltaTienda
  */
-@WebServlet("/ServletPrincipal")
-public class ServletPrincipal extends HttpServlet 
-{
+@WebServlet("/ServletAltaTienda")
+public class ServletAltaTienda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+	
 	private Modelo modelo; // Declarar el objeto Modelo como miembro del servlet.
 
-    @Override
-    public void init(ServletConfig config) throws ServletException 
-    {
-        super.init(config);
-        
-        // Crear el objeto Modelo utilizando el ServletConfig
-        modelo = new Modelo(config);
-    }
-    
-    
+	@Override
+	public void init(ServletConfig config) throws ServletException 
+	{
+		super.init(config);
+       
+		// Crear el objeto Modelo utilizando el ServletConfig
+		modelo = new Modelo(config);
+	}
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletPrincipal() {
+    public ServletAltaTienda() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -55,48 +49,42 @@ public class ServletPrincipal extends HttpServlet
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		// Establecer codificación de datos.
 		request.setCharacterEncoding("UTF-8");
 		// Establecemos el tipo MIME del mensaje de respuesta.
 		response.setContentType("text/html");
-
+		
 		// Recoger la sesión actual si existe, en otro caso se crea una nueva.
 		HttpSession session = request.getSession();
 		
+		// Cogemos los parametros.
 		
-		// Logout		
-		String accion = request.getParameter("accion");
-		String destino = "";
+		String nombre = request.getParameter("nombre");
 		
-		if("salir".equals(accion)) 
+		int resultado = modelo.altaTienda(nombre);
+		
+		if(resultado == 0)
 		{
-			session.invalidate();
-            request.setAttribute("message", "Sesión finalizada."); 
-            destino = "/login.jsp";
-		}		
-		
+			 session.setAttribute("altaTienda", true);
+		}
+		else if(resultado==-1)
+		{
+			session.setAttribute("tiendaDuplicada", true);
+		}
 		else
 		{
-			Date fechaCompleta = new Date();
-			SimpleDateFormat formatoFecha = new SimpleDateFormat("MMMM yyyy");
-			String fechaActual = formatoFecha.format(fechaCompleta).toUpperCase();
-			// Guardamos la fecha en la sesión.
-			session.setAttribute("fecha", fechaActual);
-	
-			int idUsuario = (int) session.getAttribute("idUsuario");
-			ArrayList<Compra> comprasMesActual = modelo.obtenerComprasMesActual(idUsuario);
-			session.setAttribute("compras", comprasMesActual);
-            destino = "/principal.jsp";
+			 session.setAttribute("altaTienda", false);
 		}
 		
 		
 		// Establecemos el contexto del proyecto
 		ServletContext servletContext = getServletContext();
 		// Creamos objeto para indicar a dónde dirigir la respuesta
-		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(destino);
+		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/ServletTiendas");
 		// Redirigir el flujo
 		requestDispatcher.forward(request, response);
 	}
+
 }

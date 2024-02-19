@@ -23,6 +23,7 @@
 	// Obtener la lista de tiendas de la sesión.
 		@SuppressWarnings("unchecked")
 	ArrayList<Tienda> tiendas = (ArrayList<Tienda>) session.getAttribute("tiendas");
+
 	%>
 
 	<table border="1" style="border-collapse: collapse;">

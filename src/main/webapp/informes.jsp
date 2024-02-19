@@ -103,7 +103,7 @@
 	
 	<form action="ServletPrincipal" method="POST">
 		<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
-    	<input type="submit" value="Volver">
+    	<input type="submit" value="Volver a Principal">
 	</form>
     
     

@@ -96,7 +96,10 @@
     	<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
 		<input type="submit" value="Informes">
 	</form>	
-	
+	<form action="ServletPrincipal" method="POST">
+		<input type="hidden" name="accion" value="salir"> <input
+			type="submit" value="Salir">
+	</form>	
 	
 	
 	<%
