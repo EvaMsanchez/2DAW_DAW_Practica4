@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ page session="true" %> <!-- Para utilizar las sesiones -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="es.studium.GestionDomesticaMVC.*" %>
 
 <!DOCTYPE html>
@@ -13,22 +11,16 @@
 <body>
 	<h2>Nueva Tienda</h2>
 	
-
-	
 	<form action="ServletAltaTienda" method="POST">
-	
-		Nombre : <input type="text" name="nombre"  required>
+		<label>Nombre:</label> <input type="text" name="nombre" required>
 		<br>				      	
 		<br>
 		<input type="submit" value="Aceptar">
 	</form>
+	
 	<form action="tiendas.jsp" method="get">
     	<button type="submit">Volver</button>
 	</form>
-	
-
-	 
-	 
 	
 </body>
 </html>

@@ -60,7 +60,6 @@ public class Compra
 		this.nombreTienda = nombreTienda;
 	}
 
-
 	public int getIdTienda()
 	{
 		return idTienda;
@@ -71,12 +70,10 @@ public class Compra
 		this.idTienda = idTienda;
 	}
 
-
 	public int getIdUsuario()
 	{
 		return idUsuario;
 	}
-
 
 	public void setIdUsuario(int idUsuario)
 	{

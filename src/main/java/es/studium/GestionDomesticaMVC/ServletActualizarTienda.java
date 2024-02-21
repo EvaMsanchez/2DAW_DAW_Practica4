@@ -16,7 +16,8 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class ServletActualizarTienda
  */
 @WebServlet("/ServletActualizarTienda")
-public class ServletActualizarTienda extends HttpServlet {
+public class ServletActualizarTienda extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
        	
 	private Modelo modelo; // Declarar el objeto Modelo como miembro del servlet.
@@ -29,6 +30,8 @@ public class ServletActualizarTienda extends HttpServlet {
         // Crear el objeto Modelo utilizando el ServletConfig
         modelo = new Modelo(config);
     }
+    
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -48,17 +51,17 @@ public class ServletActualizarTienda extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		// Establecer codificación de datos.
 		request.setCharacterEncoding("UTF-8");
 		// Establecemos el tipo MIME del mensaje de respuesta.
 		response.setContentType("text/html");
-		
 		// Recoger la sesión actual si existe, en otro caso se crea una nueva.
 		HttpSession session = request.getSession();
 		
-		// Cogemos los datos actualizados.		
 		
+		// Cogemos los datos actualizados.		
 		int idTienda = Integer.parseInt(request.getParameter("idTienda"));
 		String nombreTienda = request.getParameter("nombreTienda");
 		
@@ -73,6 +76,7 @@ public class ServletActualizarTienda extends HttpServlet {
 			 session.setAttribute("editadoTienda", false);
 		}
 		
+		
 		// Establecemos el contexto del proyecto
 		ServletContext servletContext = getServletContext();
 		// Creamos objeto para indicar a dónde dirigir la respuesta
@@ -80,5 +84,4 @@ public class ServletActualizarTienda extends HttpServlet {
 		// Redirigir el flujo
 		requestDispatcher.forward(request, response);		
 	}
-
 }

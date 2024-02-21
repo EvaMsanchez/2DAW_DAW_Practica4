@@ -49,24 +49,23 @@ public class ServletEditarTienda extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    {
         // Establecer codificación de datos.
         request.setCharacterEncoding("UTF-8");
         // Establecemos el tipo MIME del mensaje de respuesta.
         response.setContentType("text/html");
-
 		// Recoger la sesión actual si existe, en otro caso se crea una nueva.
 		HttpSession session = request.getSession();
-  
-		// Cogemos el idTienda del registro seleccionado.
 		
+		
+		// Cogemos el idTienda del registro seleccionado.
 		int idTienda = Integer.parseInt(request.getParameter("idTienda"));
 		
 		Tienda tiendaSeleccionada = modelo.obtenerTiendaSeleccionada(idTienda);
-		// String nombreTienda = tiendaSeleccionada.getNombreTienda();
 		session.setAttribute("tienda", tiendaSeleccionada);
 			        
+		
         // Establecemos el contexto del proyecto
         ServletContext servletContext = getServletContext();
         // Creamos objeto para indicar a dónde dirigir la respuesta

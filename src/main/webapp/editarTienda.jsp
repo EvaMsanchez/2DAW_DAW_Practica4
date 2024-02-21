@@ -18,14 +18,16 @@
     if (tienda != null) 
     {
 	%>
+	
 	<form action="ServletActualizarTienda" method="POST">
 		<!-- Oculto para pasar el idTienda -->
 		<input type="hidden" name="idTienda" value="<%= tienda.getIdTienda() %>">		
-		Nombre : <input type="text" name="nombreTienda" value="<%= tienda.getNombreTienda() %>" required>
+		<label>Nombre:</label> <input type="text" name="nombreTienda" value="<%= tienda.getNombreTienda() %>" required>
 		<br>				      	
 		<br>
 		<input type="submit" value="Aceptar">
 	</form>
+	
 	<form action="tiendas.jsp" method="get">
     	<button type="submit">Volver</button>
 	</form>

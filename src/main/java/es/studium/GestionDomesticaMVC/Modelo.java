@@ -97,14 +97,14 @@ public class Modelo
 				        +   "date_format(fechaCompra, '%d/%m/%Y') as fecha, "
 						+ 	"nombreTienda as tienda, "
 						+ 	"importeCompra as importe, "
-						+   "idTienda as idTienda, "
+						+   "idTiendaFK as idTienda, "
 						+   "idUsuarioFK as idUsuario "
 				  + "FROM compras "
 				  + "JOIN tiendas ON idTiendaFk = idTienda "
 				  + "WHERE "
 				  		+	"MONTH(fechaCompra) = "+ mesActual +" AND YEAR(fechaCompra) = "+ anioActual +" AND idUsuarioFk = "+ idUsu
 				  + " ORDER BY fechaCompra DESC;";
-		
+
 		try
 		{
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); //READ_ONLY: no permite actualización del contenido.
@@ -137,7 +137,6 @@ public class Modelo
 	// Método OBTENER DATOS COMPRA SELECCIONADA.
 	public Compra obtenerCompraSeleccionada(int idCompra)
 	{
-		
 		// Inicializamos la compra.
 		Compra compra = null;
 		
@@ -414,147 +413,154 @@ public class Modelo
 		
 		return comprasMes;
 	}
+
+
+	// Método OBTENER LISTADO TIENDAS.
+	public ArrayList<Tienda> obtenerListaTiendas() 
+	{
+		ArrayList<Tienda> listaTiendas = new ArrayList<>();
+		
+		sentencia = "SELECT * " + "FROM tiendas ORDER By nombreTienda" + ";";
+
+		try 
+		{
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+
+			// Crear un objeto ResultSet para guardar lo obtenido
+			// y ejecutar la sentencia SQL.
+			rs = stmt.executeQuery(sentencia); // Donde está toda la información "rs".
+
+			while (rs.next()) 
+			{
+				int idTienda = rs.getInt("idTienda");
+				String nombreTienda = rs.getString("nombreTienda");
+
+				listaTiendas.add(new Tienda(idTienda, nombreTienda));
+			}
+		}
+		catch (SQLException sqle) 
+		{
+			System.out.println("Error 11-" + sqle.getMessage());
+		}
+
+		return listaTiendas;
+	}
 	
 	
 	// Método OBTENER DATOS TIENDA SELECCIONADA.
-		public Tienda obtenerTiendaSeleccionada(int idTienda) {
-			// Inicializamos la tienda.
-			Tienda tienda = null;
+	public Tienda obtenerTiendaSeleccionada(int idTienda) 
+	{
+		// Inicializamos la tienda.
+		Tienda tienda = null;
 
-			sentencia = "SELECT idTienda as idTienda, " + "nombreTienda as nombreTienda " + "FROM tiendas " + "WHERE "
-					+ "idTienda = " + idTienda + ";";
+		sentencia = "SELECT idTienda as idTienda, " + "nombreTienda as nombreTienda " + "FROM tiendas " + "WHERE "
+				  		+ "idTienda = " + idTienda + ";";
 
-			try {
-				stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-				// READ_ONLY: no permite actualización del contenido.
+		try 
+		{
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+			// Crear un objeto ResultSet para guardar lo obtenido
+			// y ejecutar la sentencia SQL.
+			rs = stmt.executeQuery(sentencia); // Donde está toda la información "rs".
 
-				// Crear un objeto ResultSet para guardar lo obtenido
-				// y ejecutar la sentencia SQL.
-				rs = stmt.executeQuery(sentencia); // Donde está toda la información "rs".
-
-				if (rs.next()) {
-					tienda = new Tienda(rs.getInt("idTienda"), rs.getString("nombreTienda"));
-				}
-			}
-
-			catch (SQLException sqle) {
-				System.out.println("Error 9-" + sqle.getMessage());
-			}
-
-			return tienda;
-		}
-		// =============================================================================================
-
-		// Método OBTENER LISTADO TIENDAS.
-		public ArrayList<Tienda> obtenerListaTiendas() {
-			
-			ArrayList<Tienda> listaTiendas = new ArrayList<>();
-
-			sentencia = "SELECT * " + "FROM tiendas ORDER By nombreTienda" + ";";
-
-			try {
-				stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-				// READ_ONLY: no permite actualización del contenido.
-
-				// Crear un objeto ResultSet para guardar lo obtenido
-				// y ejecutar la sentencia SQL.
-				rs = stmt.executeQuery(sentencia); // Donde está toda la información "rs".
-
-				while (rs.next()) {
-					int idTienda = rs.getInt("idTienda");
-					String nombreTienda = rs.getString("nombreTienda");
-
-					listaTiendas.add(new Tienda(idTienda, nombreTienda));
-				}
-			}
-
-			catch (SQLException sqle) {
-				System.out.println("Error 10-" + sqle.getMessage());
-			}
-
-			return listaTiendas;
-		}
-
-		// =============================================================================================
-		// Método ACTUALIZAR TIENDA ...
-
-		public int actualizarTienda(int idTienda, String nombre) {
-			/* sentencia = "UPDATE tiendas " + "SET " + "nombreTienda = '" + nombre + "' WHERE " + "idTienda ='" + idTienda
-					+ "';"; */
-			sentencia = " UPDATE tiendas "
-					+ " SET nombreTienda = '" + nombre 
-					+ "' WHERE idTienda = '"+ idTienda +"' ;";
-
-			try {
-				stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-				// READ_ONLY: no permite actualización del contenido. Crear un objeto ResultSet para guardar lo obtenido
-				// y ejecutar la sentencia SQL.
-				stmt.executeUpdate(sentencia); // Donde está toda la información "rs".
-				return 0;
-			} catch (SQLException sqle) {
-				System.out.println("Error 11-" + sqle.getMessage());
-				return 1;
+			if (rs.next()) 
+			{
+				tienda = new Tienda(rs.getInt("idTienda"), rs.getString("nombreTienda"));
 			}
 		}
-		
-		// =============================================================================================
-		// Método BORRAR TIENDA ...
-		
-		public int borrarTienda(int idTienda) {
-			sentencia = "DELETE FROM tiendas WHERE idTienda =" + idTienda + ";";
-		
-			try {
-				stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-				// READ_ONLY: no permite actualización del contenido.
-
-				// Crear un objeto ResultSet para guardar lo obtenido
-				// y ejecutar la sentencia SQL.
-				stmt.executeUpdate(sentencia); // Donde está toda la información "rs".
-				return 0;
-			} catch (SQLException sqle) {
-				System.out.println("Error 12-" + sqle.getMessage());
-				return 1;
-			}
-			
+		catch (SQLException sqle) 
+		{
+			System.out.println("Error 12-" + sqle.getMessage());
 		}
+
+		return tienda;
+	}
 		
-		// Método INSERTAR NUEVA TIENDA.
-			public int altaTienda(String nombre) {
-				
-				sentencia = "SELECT * FROM tiendas WHERE nombreTienda = '" + nombre + "';";
-				
-				try {
-					
-					stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-					
-					rs = stmt.executeQuery(sentencia); 
-					
-					if(rs.next()) {
-						System.out.println("Error 13- duplicado")  ;
-						return -1;
-						
-					}
-				
-			} catch (SQLException sqle) {
-				System.out.println("Error 14-" + sqle.getMessage());
-				return 1;
-			}
-				
-				sentencia = "INSERT INTO tiendas " + "VALUES (null, '" + nombre + "');";
 
-				try {
-					stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-					// READ_ONLY: no permite actualización del contenido.
+	// Método ACTUALIZAR TIENDA.
+	public int actualizarTienda(int idTienda, String nombre) 
+	{
+		sentencia = " UPDATE tiendas "
+				  + " SET nombreTienda = '" + nombre +"' WHERE idTienda = '"+ idTienda +"';"; 
 
-					// Crear un objeto ResultSet para guardar lo obtenido
-					// y ejecutar la sentencia SQL.
-					stmt.executeUpdate(sentencia); // Donde está toda la información "rs".
-					return 0;
-				} catch (SQLException sqle) {
-					System.out.println("Error 15-" + sqle.getMessage());
-					return 1;
-				}
-			}
-			
+		try 
+		{
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+			// READ_ONLY: no permite actualización del contenido. Crear un objeto ResultSet para guardar lo obtenido
+			// y ejecutar la sentencia SQL.
+			stmt.executeUpdate(sentencia); // Donde está toda la información "rs".
+			return 0;
+		} 
+		catch (SQLException sqle) 
+		{
+			System.out.println("Error 13-" + sqle.getMessage());
+			return 1;
+		}
+	}
+
 	
+	// Método BORRAR TIENDA.
+	public int borrarTienda(int idTienda) 
+	{
+		sentencia = "DELETE FROM tiendas WHERE idTienda =" + idTienda + ";";
+	
+		try 
+		{
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+			// Crear un objeto ResultSet para guardar lo obtenido
+			// y ejecutar la sentencia SQL.
+			stmt.executeUpdate(sentencia); // Donde está toda la información "rs".
+			return 0;
+		} 
+		catch (SQLException sqle) 
+		{
+			System.out.println("Error 14-" + sqle.getMessage());
+			return 1;
+		}
+	}
+	
+	
+	// Método INSERTAR NUEVA TIENDA.
+	public int altaTienda(String nombre) 
+	{
+		sentencia = "SELECT * FROM tiendas WHERE nombreTienda = '" + nombre + "';";
+		
+		try 
+		{
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+			// Crear un objeto ResultSet para guardar lo obtenido
+			// y ejecutar la sentencia SQL.
+			rs = stmt.executeQuery(sentencia); 
+			
+			if(rs.next()) 
+			{
+				System.out.println("Error 15- duplicado")  ;
+				return -1;
+			}
+		} 
+		catch (SQLException sqle) 
+		{
+			System.out.println("Error 16-" + sqle.getMessage());
+			return 1;
+		}
+		
+		
+		sentencia = "INSERT INTO tiendas " + "VALUES (null, '" + nombre + "');";
+
+		try 
+		{
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+
+			// Crear un objeto ResultSet para guardar lo obtenido
+			// y ejecutar la sentencia SQL.
+			stmt.executeUpdate(sentencia); // Donde está toda la información "rs".
+			return 0;
+		} 
+		catch (SQLException sqle) 
+		{
+			System.out.println("Error 17-" + sqle.getMessage());
+			return 1;
+		}
+	}
+			
 }

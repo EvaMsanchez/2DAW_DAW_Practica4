@@ -47,7 +47,7 @@
 			
 		<% 
         for (Compra compra : compras) 
-        { %>	
+        {%>	
 			<tr>
 			    <td><%= compra.getFecha() %></td>
 			    <td><%= compra.getNombreTienda() %></td>

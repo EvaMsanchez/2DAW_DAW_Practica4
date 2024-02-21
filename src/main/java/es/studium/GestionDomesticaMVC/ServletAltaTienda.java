@@ -49,20 +49,19 @@ public class ServletAltaTienda extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		// Establecer codificación de datos.
 		request.setCharacterEncoding("UTF-8");
 		// Establecemos el tipo MIME del mensaje de respuesta.
 		response.setContentType("text/html");
-		
 		// Recoger la sesión actual si existe, en otro caso se crea una nueva.
 		HttpSession session = request.getSession();
 		
+		
 		// Cogemos los parametros.
-		
 		String nombre = request.getParameter("nombre");
-		
+	
 		int resultado = modelo.altaTienda(nombre);
 		
 		if(resultado == 0)
@@ -86,5 +85,4 @@ public class ServletAltaTienda extends HttpServlet {
 		// Redirigir el flujo
 		requestDispatcher.forward(request, response);
 	}
-
 }

@@ -61,7 +61,6 @@ public class ServletPrincipal extends HttpServlet
 		request.setCharacterEncoding("UTF-8");
 		// Establecemos el tipo MIME del mensaje de respuesta.
 		response.setContentType("text/html");
-
 		// Recoger la sesión actual si existe, en otro caso se crea una nueva.
 		HttpSession session = request.getSession();
 		
