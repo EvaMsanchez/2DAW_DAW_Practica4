@@ -1,0 +1,34 @@
+@charset "ISO-8859-1";
+
+/*LOGIN*/
+.body_login {
+	background-color: #333A73;
+}
+
+.sombraLogin {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.9); /* Añadimos sombra */
+}
+
+/*PRINCIPAL   EEEEEE   C7C8CC*/
+.body {
+	background-color: #;
+}
+
+.container, .container-fluid {
+	height: 100vh;
+}
+
+.sombra {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Añadimos sombra */
+}
+
+.titulo {
+	background-color: #333A73;
+	padding: 10px;
+	color: white;
+	margin-bottom: 20px;
+}
+
+.scroll{
+	overflow-y:scroll;
+}

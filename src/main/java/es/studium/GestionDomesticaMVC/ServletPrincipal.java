@@ -72,7 +72,7 @@ public class ServletPrincipal extends HttpServlet
 		if("salir".equals(accion)) 
 		{
 			session.invalidate();
-            request.setAttribute("message", "Sesión finalizada."); 
+            //request.setAttribute("message", "Sesión finalizada."); 
             destino = "/login.jsp";
 		}		
 		
