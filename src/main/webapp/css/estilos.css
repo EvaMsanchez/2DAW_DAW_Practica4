@@ -9,17 +9,8 @@
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.9); /* Añadimos sombra */
 }
 
-/*PRINCIPAL   EEEEEE   C7C8CC*/
-.body {
-	background-color: #;
-}
-
-.container, .container-fluid {
+.container{
 	height: 100vh;
-}
-
-.sombra {
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Añadimos sombra */
 }
 
 .titulo {
@@ -29,6 +20,3 @@
 	margin-bottom: 20px;
 }
 
-.scroll{
-	overflow-y:scroll;
-}

@@ -15,33 +15,33 @@
 
 <body class="body_login">
 	<div class="container d-flex align-items-center justify-content-center">
-    <div class="card sombraLogin p-4">
-        <h2 class="text-center mb-4">Login</h2>
-	    <%
-		    String error = (String) session.getAttribute("error");
-		    if (error != null) 
-		    {
-		%>
-			    <script>
-			        alertify.error("<%= error %>");
-			    </script>
-		<% 
-		        session.removeAttribute("error");
-		    } 
-	    %>
-	    <form action="ServletLogin" method="POST">
-			<div class="mb-3">
-                <input class="form-control" type="text" name="usuario" placeholder="Usuario" required>
-            </div>
-            <div class="mb-3">
-                <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
-            </div>
-			<div class="d-grid gap-2">
-                <button class="btn btn-success" type="submit">Aceptar</button>
-                <button  class="btn btn-dark" type="reset">Cancelar</button>
-            </div>
-		</form>
-	</div>
+	    <div class="card sombraLogin p-4">
+	        <h2 class="text-center mb-4">Login</h2>
+		    <%
+			    String error = (String) session.getAttribute("error");
+			    if (error != null) 
+			    {
+			%>
+				    <script>
+				        alertify.error("<%= error %>");
+				    </script>
+			<% 
+			        session.removeAttribute("error");
+			    } 
+		    %>
+		    <form action="ServletLogin" method="POST">
+				<div class="mb-3">
+	                <input class="form-control" type="text" name="usuario" placeholder="Usuario" required>
+	            </div>
+	            <div class="mb-3">
+	                <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
+	            </div>
+				<div class="d-grid gap-2">
+	                <button class="btn btn-success" type="submit">Aceptar</button>
+	                <button  class="btn btn-dark" type="reset">Cancelar</button>
+	            </div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

@@ -17,33 +17,25 @@
 </head>
 
 <body class="body">
-	<div class="container-fluid d-flex justify-content-center">
-	<div class="col-md-7 col-lg-6 mx-auto my-4 card p-4 sombra scroll">
-		<h2 class="text-center titulo mb-0 rounded fw-bold">Gestión Doméstica</h2>
-		<br>
-		<h3 class="text-center"><%=session.getAttribute("fecha") %></h3>
+	<div class="container justify-content-center fondo">
+		<div class="col-md-8 col-lg-7 mx-auto p-4">
+			<h2 class="text-center titulo mb-0 rounded fw-bold">Gestión Doméstica</h2>
+			<br>
+			<h3 class="text-center"><%=session.getAttribute("fecha") %></h3>
 	
-		<%
-		@SuppressWarnings("unchecked")
-	    // Obtener la lista de compras de la sesión.
-	    ArrayList<Compra> compras = (ArrayList<Compra>) session.getAttribute("compras");
-		
-		double total = 0.0;
-		
-	    // Verificar si hay compras en la lista.
-	    if (compras != null && !compras.isEmpty()) 
-	    {
-			for (Compra compra : compras) 
-			{ 
-				// Sumar el importe de la compra al total.
-	            total += compra.getImporte();
-			}
+			<%
+			@SuppressWarnings("unchecked")
+		    // Obtener la lista de compras de la sesión.
+		    ArrayList<Compra> compras = (ArrayList<Compra>) session.getAttribute("compras");
+			
+			double total = 0.0;
 			%>
+			
 			<p class="text-center">Total Actual: <span class="fw-bold"><%= String.format("%.2f €", total) %></span></p>
 			<br>
 			<div class="row">
-                <div class="col">
-                	<form action="ServletSelectAlta" method="POST">
+	               <div class="col">
+	               	<form action="ServletSelectAlta" method="POST">
 						<input type="hidden" name="paginaOrigen" value="principal">
 						<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
 						<button type="submit" class="btn btn-success">Agregar Compra</button>
@@ -60,10 +52,21 @@
 					</form>	
 				</div>
 			</div>
-			<br>	
+			<br>
+		
+			<%
+		    // Verificar si hay compras en la lista.
+		    if (compras != null && !compras.isEmpty()) 
+		    {
+				for (Compra compra : compras) 
+				{ 
+					// Sumar el importe de la compra al total.
+		            total += compra.getImporte();
+				}
+				%>
 			
 			<div class="row">
-                <div>
+	            <div>
 				<table class="table text-center">
 					<thead>
 					<tr>
@@ -112,7 +115,8 @@
 			}
 			else
 			{
-				out.println("<p>No hay compras registradas para el mes actual.</p>");
+				out.println("<br>");
+				out.println("<p class='text-center'>No hay compras registradas para el mes actual.</p>");
 			}%>	
 			<br>
 			<br>
@@ -120,9 +124,10 @@
 			<div class="text-center">		    
 				<form action="ServletPrincipal" method="POST">
 					<input type="hidden" name="accion" value="salir">
-					<button type="submit" class="btn btn-dark mb-2">Cerrar sesión</button>
+					<button type="submit" class="btn btn-dark">Cerrar sesión</button>
 				</form>	
 			</div>
+			
 			
 			<%
 			// Mensaje editar.
@@ -173,11 +178,12 @@
 		    
 		    <script>
 		    function confirmarBorrado(idCompra) 
-		    {
+		    {  		    	
 		        // Mostrar mensaje de confirmación con Alertify.
-		        alertify.confirm("¿Estás seguro de que deseas eliminar esta compra?", 
+		        alertify.confirm( "¿Estás seguro de que deseas eliminar esta compra?", 
 		        function (a) 
 		        {
+		        	
 		            if(a)
 		            {
 		                document.getElementById("borrar" + idCompra).submit();

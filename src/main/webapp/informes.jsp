@@ -17,50 +17,50 @@
 </head>
 
 <body class="body">
-	<div class="container-fluid d-flex justify-content-center">
-	<div class="col-md-7 col-lg-6 mx-auto my-4 card p-4 sombra scroll">
-		<h2 class="text-center titulo mb-0 rounded fw-bold">Informes</h2>
-		<br>
-		
-		<div class="form-group">
-		<form action="ServletInformes" method="POST">
-			<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
-			<select class="form-select" name="fechaSeleccionada" onchange="this.form.submit()">
-		       	 
-		       	<%= session.getAttribute("mesAnio") %>
-		     
-			</select>
-		</form>
-		</div>
-		<br>	
-		
-		<%
-		@SuppressWarnings("unchecked")
-	    // Obtener compras del mes seleccionado
-	    ArrayList<Compra> comprasMes = (ArrayList<Compra>) session.getAttribute("comprasMes");
-	    
-		double total = 0.0;
-		
-	    if (comprasMes != null && !comprasMes.isEmpty()) 
-	    {
-	    	  String fechaSeleccionada = (String) session.getAttribute("mostrarFecha");
-	          if (fechaSeleccionada != null && !fechaSeleccionada.isEmpty()) 
-	          { %>
-	            <h3 class="text-center"><%= fechaSeleccionada.toUpperCase() %></h3>
-	          <% 
-	          }     	
-	    
-	    	for (Compra compra : comprasMes) 
-			{ 
-				// Sumar el importe de la compra al total.
-	            total += compra.getImporte();
-			}
-	   		%>
+	<div class="container justify-content-center">
+		<div class="col-md-8 col-lg-7 mx-auto p-4">
+			<h2 class="text-center titulo mb-0 rounded fw-bold">Informes</h2>
+			<br>
+			
+			<div class="form-group">
+			<form action="ServletInformes" method="POST">
+				<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
+				<select class="form-select" name="fechaSeleccionada" onchange="this.form.submit()">
+			       	 
+			       	<%= session.getAttribute("mesAnio") %>
+			     
+				</select>
+			</form>
+			</div>
+			<br>	
+			
+			<%
+			@SuppressWarnings("unchecked")
+		    // Obtener compras del mes seleccionado
+		    ArrayList<Compra> comprasMes = (ArrayList<Compra>) session.getAttribute("comprasMes");
+		    
+			double total = 0.0;
+			
+		    if (comprasMes != null && !comprasMes.isEmpty()) 
+		    {
+		    	  String fechaSeleccionada = (String) session.getAttribute("mostrarFecha");
+		          if (fechaSeleccionada != null && !fechaSeleccionada.isEmpty()) 
+		          { %>
+		            <h3 class="text-center"><%= fechaSeleccionada.toUpperCase() %></h3>
+		          <% 
+		          }     	
+		    
+		    	for (Compra compra : comprasMes) 
+				{ 
+					// Sumar el importe de la compra al total.
+		            total += compra.getImporte();
+				}
+		   		%>
 	   		<p class="text-center">Total Actual: <span class="fw-bold"><%= String.format("%.2f €", total) %></span></p>
 	   		<br>
 			<div class="row">
-               	<div class="col">
-                	<form action="ServletSelectAlta" method="POST">
+	              	<div class="col">
+	               	<form action="ServletSelectAlta" method="POST">
 						<input type="hidden" name="paginaOrigen" value="informes">
 						<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
 						<button type="submit" class="btn btn-success">Agregar Compra</button>
@@ -70,7 +70,7 @@
 			<br>		
 	   		
 		    <div class="row">
-                <div>
+	               <div>
 				<table class="table text-center">
 					<thead>
 			        <tr>
@@ -104,7 +104,7 @@
 								<input type="hidden" name="paginaOrigen" value="informes">
 								<!-- Oculto para pasar el idCompra -->
 								<input type="hidden" name="idCompra" value="<%= compra.getIdCompra() %>">
-								<button type="button" onclick="confirmarBorrado(<%= compra.getIdCompra() %>)" class="btn btn-danger">Borrar</button>
+								<button type="button" onclick="confirmarBorradoInformes(<%= compra.getIdCompra() %>)" class="btn btn-danger">Borrar</button>
 							</form>
 						</td>
 			        </tr>
@@ -114,21 +114,20 @@
 			    %>
 			    </table>
 			    </div>
-			</div>	    
-			<br>
-			<br>
-			    
-			  
-		    <% 
+			</div>
+			<br>	    
+			<% 
 		    } 
-		  	%>	
+		  	%>
+			<br>	
 		
 			<div class="text-center">	
 				<form action="ServletPrincipal" method="POST">
 					<input type="hidden" name="idUsuario" value="<%= session.getAttribute("idUsuario") %>">
-			    	<button type="submit" class="btn btn-dark mb-2">Volver a Principal</button>
+			    	<button type="submit" class="btn btn-dark">Volver a Principal</button>
 				</form>
 		    </div>
+		    
 		    
 		    <%
 			// Mensaje editar.
