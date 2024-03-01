@@ -13,7 +13,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<!-- Alertify -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="body">
@@ -122,9 +123,9 @@
 			<br>
 			
 			<div class="text-center">		    
-				<form action="ServletPrincipal" method="POST">
+				<form action="ServletPrincipal" method="POST" id="formCerrarSesion">
 					<input type="hidden" name="accion" value="salir">
-					<button type="submit" class="btn btn-dark">Cerrar sesión</button>
+					<button type="button" onclick="confirmarCerrarSesion()" class="btn btn-dark">Cerrar sesión</button>
 				</form>	
 			</div>
 			
@@ -187,6 +188,21 @@
 		            if(a)
 		            {
 		                document.getElementById("borrar" + idCompra).submit();
+		            } 
+		            else {}
+		        });
+		    }
+		    
+		    function confirmarCerrarSesion()
+		    {
+		    	// Mostrar mensaje de confirmación con Alertify.
+		        alertify.confirm( "¿Estás seguro de que deseas cerrar sesión?", 
+		        function (a) 
+		        {
+		        	
+		            if(a)
+		            {
+		                document.getElementById("formCerrarSesion").submit();
 		            } 
 		            else {}
 		        });
