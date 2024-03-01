@@ -13,8 +13,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<!-- Alertify -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
 </head>
 
 <body class="body">
@@ -30,7 +29,17 @@
 		    ArrayList<Compra> compras = (ArrayList<Compra>) session.getAttribute("compras");
 			
 			double total = 0.0;
-			%>
+			
+		    // Verificar si hay compras en la lista.
+		    if (compras != null && !compras.isEmpty()) 
+		    {
+				for (Compra compra : compras) 
+				{ 
+					// Sumar el importe de la compra al total.
+		            total += compra.getImporte();
+				}
+		    }	
+				%>
 			
 			<p class="text-center">Total Actual: <span class="fw-bold"><%= String.format("%.2f €", total) %></span></p>
 			<br>
@@ -59,12 +68,7 @@
 		    // Verificar si hay compras en la lista.
 		    if (compras != null && !compras.isEmpty()) 
 		    {
-				for (Compra compra : compras) 
-				{ 
-					// Sumar el importe de la compra al total.
-		            total += compra.getImporte();
-				}
-				%>
+			%>
 			
 			<div class="row">
 	            <div>
@@ -181,31 +185,27 @@
 		    function confirmarBorrado(idCompra) 
 		    {  		    	
 		        // Mostrar mensaje de confirmación con Alertify.
-		        alertify.confirm( "¿Estás seguro de que deseas eliminar esta compra?", 
-		        function (a) 
-		        {
-		        	
-		            if(a)
-		            {
-		                document.getElementById("borrar" + idCompra).submit();
-		            } 
-		            else {}
-		        });
+		        alertify.confirm("Borrar compra", "¿Estás seguro de que deseas eliminar la compra?", 
+	        	function()
+	        	{
+	        		// OK
+	        		document.getElementById("borrar" + idCompra).submit();
+	        	},
+	        	function()
+				{});
 		    }
 		    
 		    function confirmarCerrarSesion()
 		    {
 		    	// Mostrar mensaje de confirmación con Alertify.
-		        alertify.confirm( "¿Estás seguro de que deseas cerrar sesión?", 
-		        function (a) 
-		        {
-		        	
-		            if(a)
-		            {
-		                document.getElementById("formCerrarSesion").submit();
-		            } 
-		            else {}
-		        });
+		        alertify.confirm("Cerrar sesión", "¿Estás seguro de que deseas cerrar sesión?", 
+		        function()
+				{
+					// OK
+					document.getElementById("formCerrarSesion").submit();
+				},
+				function()
+				{});
 		    }
 		    </script>
 		</div>	    

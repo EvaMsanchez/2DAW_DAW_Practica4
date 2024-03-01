@@ -39,11 +39,8 @@
 			
 			if (tiendas != null && !tiendas.isEmpty())
 			{
-				for (Tienda tienda : tiendas) 
-				{
-				%>
-		
-			<div class="row">
+			%>	
+				<div class="row">
 	            <div>
 				<table class="table text-center">
 					<thead>
@@ -53,8 +50,14 @@
 						<th>Borrar</th>
 					</tr>
 					</thead>
-				
+					
 					<tbody>
+				
+				<%	
+				for (Tienda tienda : tiendas) 
+				{
+				%>
+			
 					<tr>
 						<td><%=tienda.getNombreTienda()%></td>
 						
@@ -157,16 +160,14 @@
 			<script>
 			function confirmarBorrado(id) 
 			{
-				alertify.confirm('Borrar tienda', '¿Estás seguro que desea eliminar la tienda?', 
+				alertify.confirm('Borrar tienda', '¿Estás seguro de que deseas eliminar la tienda?', 
 				function()
 				{
 					// OK
 					document.getElementById('borrar_'+id).submit();
 				},
 				function()
-				{
-					// Cancelar
-				});
+				{});
 			}
 			</script>
 		</div>
